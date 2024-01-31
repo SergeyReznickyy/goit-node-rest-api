@@ -1,11 +1,6 @@
 const Contact = require("../models/contact.js");
 const HttpError = require("../helpers/HttpError.js");
 const ctrlWrapper = require("../helpers/ctrlWrapper.js");
-
-// import Contact from "../models/contact.js";
-// import HttpError from "../helpers/HttpError.js";
-// import ctrlWrapper from "../helpers/ctrlWrapper.js";
-
 const getAllContacts = async (req, res) => {
   const result = await Contact.find({}, "-createdAt -updatedAt");
   if (!result) {
@@ -57,7 +52,7 @@ const updateFavorite = async (req, res) => {
 
 const deleteContact = async (req, res) => {
   const { id } = req.params;
-  const result = await Contact.findByIdAndRemove(id);
+  const result = await Contact.findByIdAndDelete(id);
   if (!result) {
     throw HttpError(404);
   }
