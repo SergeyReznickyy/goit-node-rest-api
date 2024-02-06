@@ -1,6 +1,10 @@
 const express = require("express");
-const { validateBody, isValidId, authenticate } = require("../../middlewares");
-const ctrlWrapper = require("../../helpers/ctrlWrapper");
+const {
+  validateBody,
+  isValidId,
+  authenticate,
+} = require("../../middlewares/index.js");
+const ctrlWrapper = require("../../helpers/ctrlWrapper.js");
 
 const {
   createContactSchema,

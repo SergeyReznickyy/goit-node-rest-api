@@ -3,11 +3,11 @@ const morgan = require("morgan");
 const cors = require("cors");
 require("dotenv").config();
 const mongoose = require("mongoose");
-const authRouter = require("./routes/api/auth.js");
+const authRouter = require("./routes/user/auth.js");
 
 const { DB_HOST } = process.env;
 
-const contactsRouter = require("./routes/api/contactsRouter.js");
+const contactsRouter = require("./routes/user/contactsRouter.js");
 
 const app = express();
 
@@ -15,8 +15,8 @@ app.use(morgan("tiny"));
 app.use(cors());
 app.use(express.json());
 
-app.use("/api/auth", authRouter);
-app.use("/api/contacts", contactsRouter);
+app.use("/users", authRouter);
+app.use("/contacts", contactsRouter);
 
 app.use((_, res) => {
   res.status(404).json({ message: "Route not found" });
