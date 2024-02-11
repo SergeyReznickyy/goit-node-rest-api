@@ -1,4 +1,3 @@
-// import Joi from "joi";
 const Joi = require("joi");
 
 const createContactSchema = Joi.object({
