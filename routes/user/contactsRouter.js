@@ -1,13 +1,16 @@
 const express = require("express");
-const validateBody = require("../middlewares/validateBody.js");
-const isValidId = require("../middlewares/isValidId.js");
-const ctrlWrapper = require("../helpers/ctrlWrapper.js");
+const {
+  validateBody,
+  isValidId,
+  authenticate,
+} = require("../../middlewares/index.js");
+const ctrlWrapper = require("../../helpers/ctrlWrapper.js");
 
 const {
   createContactSchema,
   updateFavoriteSchema,
   updateContactSchema,
-} = require("../schemas/contactsSchemas.js");
+} = require("../../schemas/contactsSchemas.js");
 
 const {
   getAllContacts,
@@ -16,24 +19,36 @@ const {
   createContact,
   updateContact,
   updateFavorite,
-} = require("../controllers/contactsControllers.js");
+} = require("../../controllers/contactsControllers.js");
 
 const contactsRouter = express.Router();
 
-contactsRouter.get("/", ctrlWrapper(getAllContacts));
+contactsRouter.get("/", authenticate, ctrlWrapper(getAllContacts));
 
-contactsRouter.get("/:id", isValidId, ctrlWrapper(getContactById));
+contactsRouter.get(
+  "/:id",
+  authenticate,
+  isValidId,
+  ctrlWrapper(getContactById)
+);
 
-contactsRouter.delete("/:id", isValidId, ctrlWrapper(deleteContact));
+contactsRouter.delete(
+  "/:id",
+  authenticate,
+  isValidId,
+  ctrlWrapper(deleteContact)
+);
 
 contactsRouter.post(
   "/",
+  authenticate,
   validateBody(createContactSchema),
   ctrlWrapper(createContact)
 );
 
 contactsRouter.put(
   "/:id",
+  authenticate,
   isValidId,
   validateBody(updateContactSchema),
   ctrlWrapper(updateContact)
@@ -41,6 +56,7 @@ contactsRouter.put(
 
 contactsRouter.patch(
   "/:id/favorite",
+  authenticate,
   isValidId,
   validateBody(updateFavoriteSchema),
   ctrlWrapper(updateFavorite)

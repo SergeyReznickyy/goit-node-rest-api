@@ -1,13 +1,13 @@
 const express = require("express");
 const morgan = require("morgan");
 const cors = require("cors");
-const dotenv = require("dotenv");
+require("dotenv").config();
 const mongoose = require("mongoose");
+const authRouter = require("./routes/user/auth.js");
 
-dotenv.config();
 const { DB_HOST } = process.env;
 
-const contactsRouter = require("./routes/contactsRouter.js");
+const contactsRouter = require("./routes/user/contactsRouter.js");
 
 const app = express();
 
@@ -16,7 +16,8 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static("public"));
 
-app.use("/api/contacts", contactsRouter);
+app.use("/users", authRouter);
+app.use("/contacts", contactsRouter);
 
 app.use((_, res) => {
   res.status(404).json({ message: "Route not found" });
