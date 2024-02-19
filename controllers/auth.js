@@ -4,8 +4,10 @@ const bcrypt = require("bcrypt");
 const gravatar = require("gravatar");
 const Jimp = require("jimp");
 const jwt = require("jsonwebtoken");
+
 const { nanoid } = require("nanoid");
 const dotenv = require("dotenv").config();
+
 const { User } = require("../models/user");
 const { HttpError, ctrlWrapper, sendEmail } = require("../helpers");
 
@@ -22,6 +24,7 @@ const register = async (req, res) => {
   }
 
   const hashPassword = await bcrypt.hash(password, 10);
+
   const avatarURL = gravatar.url(email);
   const verificationToken = nanoid();
 
